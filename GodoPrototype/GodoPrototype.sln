@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodoPrototype", "GodoPrototype.csproj", "{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StubProj", "..\StubProj\StubProj.csproj", "{0576A070-AE01-45B7-8938-C2ECCEA0994C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{CCCE8F02-BD4F-464A-86ED-EFFB7354FC69}.Release|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0576A070-AE01-45B7-8938-C2ECCEA0994C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACCDCBEF-C4FB-4B41-AFAF-239F74468093}
+	EndGlobalSection
+EndGlobal

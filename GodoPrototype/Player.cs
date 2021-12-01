@@ -20,7 +20,7 @@ namespace GodoPrototype
         float minAngle = -1.0F;
         float maxAngle = 1.0F;
 
-        float angleIncreaseBy = 0.2F;
+        float angleIncreaseBy = 0.05F;
 
 
         WSMessage wsMsg = new WSMessage();
@@ -44,14 +44,13 @@ namespace GodoPrototype
             GD.Print("connection established !!");
         }
 
-        
-        // Called every frame. 'delta' is the elapsed time since the previous frame.
+
         public override void _Process(float delta)
         {
             if (isMessageQueued)
             {
                 ws.Poll();
-                GD.Print("message sent");
+                GD.Print($"message sent: { wsMsg.stringify() }");
 
                 isMessageQueued = false;
             }

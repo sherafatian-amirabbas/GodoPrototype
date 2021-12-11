@@ -27,9 +27,12 @@ namespace GodoPrototype
         bool isMessageQueued = true;
 
 
-        private string URL = "ws://192.168.50.1:8887/wsDrive";
+        //private string URL = "ws://donkey-new392:8887/wsDrive";
+        private string URL = "ws://192.168.1.9:8887/wsDrive";
         private WebSocketClient ws;
 
+
+        Vector2 startingPos;
 
         public override void _Ready()
         {
@@ -37,6 +40,8 @@ namespace GodoPrototype
             GD.Print("connection: " + ws.ConnectToUrl(URL) + "!");
 
             ws.Connect("connection_established", this, "_connected");
+
+            startingPos = this.Position;
         }
 
         public void _connected(string proto = "")
@@ -56,9 +61,11 @@ namespace GodoPrototype
             }
 
 
+            bool isLeftOrRightReleased = false;
+            var movementSpeed = 100;
             if (Input.IsActionPressed("ui_right"))
             {
-                motion.x = 100;
+                motion.x = movementSpeed;
 
                 currentAngle += angleIncreaseBy;
                 currentAngle = Math.Min(maxAngle, currentAngle);
@@ -66,28 +73,76 @@ namespace GodoPrototype
             }
             else if (Input.IsActionPressed("ui_left"))
             {
-                motion.x = -100;
+                motion.x = -movementSpeed;
 
                 currentAngle -= angleIncreaseBy;
                 currentAngle = Math.Max(minAngle, currentAngle);
                 SendMessage(currentAngle, currentThrottle);
             }
             else
+            {
                 motion.x = 0;
+                isLeftOrRightReleased = true;
+            }
+
+
+            bool isUpOrDownReleased = false;
 
             if (Input.IsActionPressed("ui_up"))
             {
-                motion.y = -100;
+                motion.y = -movementSpeed;
                 SendMessage(currentAngle, defaultSpeedForward);
             }
             else if (Input.IsActionPressed("ui_down"))
             {
-                motion.y = +100;
+                motion.y = movementSpeed;
                 SendMessage(currentAngle, defaultSpeedBackward);
             }
             else
+            {
                 motion.y = 0;
+                isUpOrDownReleased = true;
+            }
 
+
+            if (isLeftOrRightReleased && isUpOrDownReleased)
+            {
+                // back to the center
+                var inBoundaryOffset = 5;
+                var backToCenterMovementSpeed = 250;
+
+                float x = 0;
+                var isXInBoundary = Math.Abs(this.Position.x - startingPos.x) <= inBoundaryOffset;
+                if (this.Position.x > startingPos.x)
+                {
+                    // object is on right
+                    x = isXInBoundary ? 0 : -backToCenterMovementSpeed;
+                }
+                else if (this.Position.x < startingPos.x)
+                {
+                    // object is on left
+                    x = isXInBoundary ? 0 : backToCenterMovementSpeed;
+                }
+                
+                
+                float y = 0;
+                var isYInBoundary = Math.Abs(this.Position.y - startingPos.y) <= inBoundaryOffset;
+                if (this.Position.y > startingPos.y)
+                {
+                    // object is on bottom
+                    y = isYInBoundary ? 0 : -backToCenterMovementSpeed;
+                }
+                else if (this.Position.y < startingPos.y)
+                {
+                    // object is on top
+                    y = isYInBoundary ? 0 : backToCenterMovementSpeed;
+                }
+                
+
+                motion.x = x;
+                motion.y = y;
+            }
+            
 
             if (Input.IsActionJustReleased("ui_up") || Input.IsActionJustReleased("ui_down"))
             {
@@ -110,19 +165,20 @@ namespace GodoPrototype
 
             isMessageQueued = true;
         }
-    }
-
-    public class WSMessage
-    {
-        public float angle { get; set; }
-        public float throttle { get; set; }
-        public bool recording { get; set; }
-        public string drive_mode => "user";
 
 
-        public string stringify()
+        public class WSMessage
         {
-            return JsonConvert.SerializeObject(this);
+            public float angle { get; set; }
+            public float throttle { get; set; }
+            public bool recording { get; set; }
+            public string drive_mode => "user";
+
+
+            public string stringify()
+            {
+                return JsonConvert.SerializeObject(this);
+            }
         }
     }
 }

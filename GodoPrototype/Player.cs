@@ -10,7 +10,7 @@ namespace GodoPrototype
         Vector2 motion = new Vector2();
 
 
-        float defaultAngle = 0.0F;
+        float defaultAngle = 0.5F;
         float defaultSpeedForward = 1.0F;
         float defaultSpeedBackward = -0.7F;
 
@@ -67,20 +67,20 @@ namespace GodoPrototype
             {
                 motion.x = movementSpeed;
 
-                currentAngle += angleIncreaseBy;
-                currentAngle = Math.Min(maxAngle, currentAngle);
-                SendMessage(currentAngle, currentThrottle);
+                currentAngle = defaultAngle;
+                SendMessage();
+                
             }
             else if (Input.IsActionPressed("ui_left"))
             {
                 motion.x = -movementSpeed;
 
-                currentAngle -= angleIncreaseBy;
-                currentAngle = Math.Max(minAngle, currentAngle);
-                SendMessage(currentAngle, currentThrottle);
+                currentAngle = -defaultAngle;
+                SendMessage();
             }
             else
             {
+                currentAngle = 0;
                 motion.x = 0;
                 isLeftOrRightReleased = true;
             }
@@ -91,15 +91,18 @@ namespace GodoPrototype
             if (Input.IsActionPressed("ui_up"))
             {
                 motion.y = -movementSpeed;
-                SendMessage(currentAngle, defaultSpeedForward);
+                currentThrottle = defaultSpeedForward;
+                SendMessage();
             }
             else if (Input.IsActionPressed("ui_down"))
             {
                 motion.y = movementSpeed;
-                SendMessage(currentAngle, defaultSpeedBackward);
+                currentThrottle = defaultSpeedBackward;
+                SendMessage();
             }
             else
             {
+                currentThrottle = 0;
                 motion.y = 0;
                 isUpOrDownReleased = true;
             }
@@ -147,18 +150,18 @@ namespace GodoPrototype
             if (Input.IsActionJustReleased("ui_up") || Input.IsActionJustReleased("ui_down"))
             {
                 currentAngle = 0;
-                currentAngle = 0;
-                SendMessage(currentAngle, currentAngle);
+                currentThrottle = 0;
+                SendMessage();
             }
 
 
             MoveAndSlide(motion);
         }
 
-        public void SendMessage(float angle, float throttle)
+        public void SendMessage()
         {
-            wsMsg.angle = angle;
-            wsMsg.throttle = throttle;
+            wsMsg.angle = currentAngle;
+            wsMsg.throttle = currentThrottle;
             var msg = wsMsg.stringify();
             var err = ws.GetPeer(1).PutPacket(msg.ToUTF8());
             GD.Print("put package - " + err);

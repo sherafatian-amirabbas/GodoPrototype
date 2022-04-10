@@ -3,7 +3,8 @@ using System;
 
 public class TextureRect_Camera : TextureRect
 {
-    private string URL = "ws://192.168.1.9:8887/wsVideo";
+    //private string URL = "ws://192.168.1.9:8080/wsVideo";
+    private string URL = "ws://192.168.137.153:8080/wsVideo";
     private WebSocketClient ws;
 
 

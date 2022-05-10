@@ -28,8 +28,8 @@ namespace GodoPrototype
 
 
         //private string URL = "ws://donkey-new392:8887/wsDrive";
-        //private string URL = "ws://192.168.1.9:8887/wsDrive";
-        private string URL = "ws://192.168.137.153:8887/wsDrive";
+        private string URL = "ws://192.168.1.9:8887/wsDrive";
+        //private string URL = "ws://192.168.137.153:8887/wsDrive";
         private WebSocketClient ws;
 
 

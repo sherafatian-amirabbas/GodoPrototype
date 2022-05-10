@@ -3,8 +3,8 @@ using System;
 
 public class TextureRect_Camera : TextureRect
 {
-    //private string URL = "ws://192.168.1.9:8080/wsVideo";
-    private string URL = "ws://192.168.137.153:8080/wsVideo";
+    private string URL = "ws://192.168.1.9:8080/wsVideo";
+    //private string URL = "ws://192.168.137.153:8080/wsVideo";
     private WebSocketClient ws;
 
 
@@ -31,6 +31,7 @@ public class TextureRect_Camera : TextureRect
         GD.Print("connection established !!");
     }
 
+    long lastTimeMilliseconds = default(long);
     public void _on_received_data()
     {
         var img_bytes = ws.GetPeer(1).GetPacket();
@@ -43,5 +44,16 @@ public class TextureRect_Camera : TextureRect
         texture.CreateFromImage(image);
 
         this.Texture = texture;
+
+
+        //I/O duration calculation
+        long currentTimeMilliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+        if (lastTimeMilliseconds == default(long))
+            lastTimeMilliseconds = currentTimeMilliseconds;
+        else
+        {
+            GD.Print($"I/O duration for camera in ms: {currentTimeMilliseconds - lastTimeMilliseconds}");
+            lastTimeMilliseconds = currentTimeMilliseconds;
+        }
     }
 }
